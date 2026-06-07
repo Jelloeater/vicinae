@@ -1,6 +1,6 @@
 name: vicinae
-arch: ${GOARCH}
-platform: ${GOOS}
+arch: amd64
+platform: linux
 version: ${VERSION}
 maintainer: "Aurelien Brabant <gh@aurelle.dev>"
 homepage: https://github.com/vicinaehq/vicinae
@@ -17,9 +17,9 @@ depends:
   - nodejs
   - npm
 contents:
-  - src: build/bin/vicinae
+  - src: install/bin/vicinae
     dst: /usr/bin/vicinae
-  - src: build/bin/vicinae-*
+  - src: install/libexec/vicinae/vicinae-*
     dst: /usr/libexec/vicinae/
 
   - src: extra/vicinae.desktop
@@ -27,13 +27,11 @@ contents:
   - src: extra/vicinae-url-handler.desktop
     dst: /usr/share/applications/vicinae-url-handler.desktop
   - src: extra/vicinae.service
-    dst: /etc/systemd/system/vicinae.service
+    dst: /usr/lib/systemd/user/vicinae.service
   - src: extra/vicinae.png
     dst: /usr/share/icons/hicolor/512x512/apps/vicinae.png
-  - src: extra/udev/rules.d/70-vicinae.rules
-    dst: /lib/udev/rules.d/70-vicinae.rules
   - src: extra/modules-load.d/vicinae.conf
-    dst: /lib/modules-load.d/70-vicinae.rules
+    dst: /usr/lib/modules-load.d/vicinae.conf
 
   - src: extra/themes
     dst: /usr/share/vicinae/themes

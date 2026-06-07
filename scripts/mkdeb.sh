@@ -10,17 +10,12 @@ if [[ -z "$VERSION" ]]; then
   exit 1
 fi
 
-VERSION="${VERSION/v/}"
+VERSION="${VERSION#v}"
 
-BUILD_DIR="$(pwd)/build"
-INSTALL_DIR="$(pwd)/install"
-if [[ ! -e "$INSTALL_DIR" ]]; then
-  echo "Error: INSTALL_DIR \"$INSTALL_DIR\" could not be found" \
-  "(was vicinae built?)" >&2
-  exit 1
-elif [[ ! -d "$BUILD_DIR" ]]; then
-  echo "Error: BUILD_DIR \"$BUILD_DIR\" could not be found" \
-  "(was vicinae built?)" >&2
+BUILD_DIR="${BUILD_DIR:-"$(pwd)/build"}"
+INSTALL_DIR="${INSTALL_DIR:-"$(pwd)/install"}"
+if [[ ! -e "$BUILD_DIR/bin/vicinae" && ! -e "$INSTALL_DIR/bin/vicinae" ]]; then
+  echo "Error: Missing expected build artifacts at \"$BUILD_DIR/bin/vicinae\" or \"$INSTALL_DIR/bin/vicinae\" (was vicinae built and installed?)" >&2
   exit 1
 fi
 

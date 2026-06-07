@@ -163,9 +163,11 @@ jobs:
 
       - name: Install nfpm
         run: |-
-          echo 'deb [trusted=yes] https://repo.goreleaser.com/apt/ /' | sudo tee /etc/apt/sources.list.d/goreleaser.list
+          sudo mkdir -p /etc/apt/keyrings
+          curl -fsSL https://repo.goreleaser.com/apt/gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/goreleaser-archive-keyring.gpg
+          echo 'deb [signed-by=/etc/apt/keyrings/goreleaser-archive-keyring.gpg] https://repo.goreleaser.com/apt/ /' | sudo tee /etc/apt/sources.list.d/goreleaser.list
           sudo apt-get update -y
-          sudo apt-get install nfpm
+          sudo apt-get install -y nfpm
 
       - name: Prepare dirs
         run: mkdir -p build install
@@ -259,4 +261,3 @@ jobs:
           GH_TOKEN: ${{ secrets.PACKAGING_AUR_TOKEN }}
         run: |
           gh workflow run bumpver.yml --repo vicinaehq/packaging-arch
-
